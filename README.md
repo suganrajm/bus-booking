@@ -11,6 +11,18 @@ A full-stack bus booking web application built with **Spring Boot** (backend) an
 - 📋 **Booking history** with cancel and delete options
 - 📧 **Real email notifications** for registration, booking confirmation, and cancellation (Gmail SMTP)
 
+
+## 🖼️ Sample Screenshots
+
+<img width="1899" height="1079" alt="Screenshot 2026-03-27 152735" src="https://github.com/user-attachments/assets/4579c55b-e7f7-4693-be1e-39c2901489ab" />
+<img width="1902" height="1079" alt="Screenshot 2026-03-27 152827" src="https://github.com/user-attachments/assets/588ab088-785b-4415-9635-28c91b4c0433" />
+<img width="1919" height="526" alt="Screenshot 2026-03-27 152848" src="https://github.com/user-attachments/assets/b54b359f-1791-4496-8e58-d2407410e428" />
+
+
+## Admin Dashboard
+
+<img width="1919" height="1079" alt="Screenshot 2026-03-27 152639" src="https://github.com/user-attachments/assets/4d042f8a-9ace-480f-b030-ee385120c7bc" />
+
 ## 🏗️ Tech Stack
 
 | Layer | Technology |
