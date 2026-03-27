@@ -14,8 +14,6 @@ public class SignupRequest {
     @NotBlank
     private String password;
 
-    private String phone;
-
     public SignupRequest() {}
 
     public String getName() { return name; }
@@ -26,7 +24,4 @@ public class SignupRequest {
 
     public String getPassword() { return password; }
     public void setPassword(String password) { this.password = password; }
-
-    public String getPhone() { return phone; }
-    public void setPhone(String phone) { this.phone = phone; }
 }

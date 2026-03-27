@@ -50,5 +50,15 @@ export const busService = {
   deleteSchedule: async (id) => {
     const response = await api.delete(`/schedules/${id}`);
     return response.data;
+  },
+
+  getAllUsers: async () => {
+    const response = await api.get('/users');
+    return response.data;
+  },
+
+  deleteUser: async (id) => {
+    const response = await api.delete(`/users/${id}`);
+    return response.data;
   }
 };

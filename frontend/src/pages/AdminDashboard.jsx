@@ -7,6 +7,7 @@ const AdminDashboard = () => {
   const [buses, setBuses] = useState([]);
   const [routes, setRoutes] = useState([]);
   const [schedules, setSchedules] = useState([]);
+  const [users, setUsers] = useState([]);
 
   const [busData, setBusData] = useState({ busNumber: '', operatorName: '', totalSeats: '', type: 'AC SEATER' });
   const [routeData, setRouteData] = useState({ source: '', destination: '', distance: '' });
@@ -16,14 +17,16 @@ const AdminDashboard = () => {
 
   const loadAll = async () => {
     try {
-      const [b, r, s] = await Promise.all([
+      const [b, r, s, u] = await Promise.all([
         busService.getAllBuses(),
         busService.getAllRoutes(),
-        busService.getAllSchedules()
+        busService.getAllSchedules(),
+        busService.getAllUsers()
       ]);
       setBuses(b);
       setRoutes(r);
       setSchedules(s);
+      setUsers(u);
     } catch (err) {
       console.error('Failed to load data:', err);
       setMessage({ type: 'error', text: 'Failed to load data from server. Please make sure the backend is running.' });
@@ -83,6 +86,7 @@ const AdminDashboard = () => {
       if (type === 'bus') await busService.deleteBus(id);
       else if (type === 'route') await busService.deleteRoute(id);
       else if (type === 'schedule') await busService.deleteSchedule(id);
+      else if (type === 'user') await busService.deleteUser(id);
       showMessage('success', `${type.charAt(0).toUpperCase() + type.slice(1)} deleted.`);
       loadAll();
     } catch (err) {
@@ -107,6 +111,7 @@ const AdminDashboard = () => {
         <button style={tabStyle('bus')} onClick={() => setActiveTab('bus')}>🚌 Buses</button>
         <button style={tabStyle('route')} onClick={() => setActiveTab('route')}>🗺️ Routes</button>
         <button style={tabStyle('schedule')} onClick={() => setActiveTab('schedule')}>📅 Schedules</button>
+        <button style={tabStyle('users')} onClick={() => setActiveTab('users')}>👥 Users</button>
       </div>
 
       {message.text && (
@@ -232,6 +237,25 @@ const AdminDashboard = () => {
                 </span>
               </div>
               <button style={deleteBtn} onClick={() => handleDelete('schedule', s.id)}>Delete</button>
+            </div>
+          ))}
+        </div>
+      )}
+      {/* USERS TAB */}
+      {activeTab === 'users' && (
+        <div>
+          <h3>Registered Users ({users.length})</h3>
+          {users.length === 0 ? <p style={{ color: '#888' }}>No users found.</p> : users.map(u => (
+            <div key={u.id} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '14px', borderRadius: '8px', background: 'var(--card-bg, #1e2236)', marginBottom: '10px' }}>
+              <div>
+                <strong>{u.name}</strong> 
+                <span style={{ color: '#888', fontSize: '13px', marginLeft: '10px' }}>
+                  | {u.email} | {u.role} | {u.phone || 'No Phone'}
+                </span>
+              </div>
+              {u.role !== 'ROLE_ADMIN' && (
+                <button style={deleteBtn} onClick={() => handleDelete('user', u.id)}>Delete</button>
+              )}
             </div>
           ))}
         </div>

@@ -1,16 +1,17 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { authService } from '../services/authService';
-import { UserPlus } from 'lucide-react';
+import { UserPlus, Eye, EyeOff } from 'lucide-react';
 
 const Register = () => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
-    phone: '',
     password: '',
     confirmPassword: ''
   });
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -33,8 +34,8 @@ const Register = () => {
     setIsLoading(true);
 
     try {
-      const { name, email, phone, password } = formData;
-      await authService.register({ name, email, phone, password });
+      const { name, email, password } = formData;
+      await authService.register({ name, email, password });
       
       setSuccess('Registration successful! Redirecting to login...');
       setTimeout(() => navigate('/login'), 2000);
@@ -80,43 +81,75 @@ const Register = () => {
             />
           </div>
 
-          <div className="form-group">
-            <label className="form-label">Phone Number</label>
-            <input 
-              type="text" 
-              name="phone"
-              className="form-control" 
-              value={formData.phone}
-              onChange={handleChange}
-              required 
-              placeholder="+1234567890"
-            />
-          </div>
-          
+
           <div className="form-group">
             <label className="form-label">Password</label>
-            <input 
-              type="password" 
-              name="password"
-              className="form-control" 
-              value={formData.password}
-              onChange={handleChange}
-              required 
-              placeholder="Create a strong password"
-            />
+            <div style={{ position: 'relative' }}>
+              <input 
+                type={showPassword ? 'text' : 'password'} 
+                name="password"
+                className="form-control" 
+                value={formData.password}
+                onChange={handleChange}
+                required 
+                placeholder="Create a strong password"
+                style={{ paddingRight: '45px' }}
+              />
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                style={{
+                  position: 'absolute',
+                  right: '12px',
+                  top: '50%',
+                  transform: 'translateY(-50%)',
+                  background: 'none',
+                  border: 'none',
+                  color: 'var(--text-muted)',
+                  cursor: 'pointer',
+                  display: 'flex',
+                  alignItems: 'center',
+                  padding: '4px'
+                }}
+              >
+                {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+              </button>
+            </div>
           </div>
 
           <div className="form-group">
             <label className="form-label">Confirm Password</label>
-            <input 
-              type="password" 
-              name="confirmPassword"
-              className="form-control" 
-              value={formData.confirmPassword}
-              onChange={handleChange}
-              required 
-              placeholder="Confirm your password"
-            />
+            <div style={{ position: 'relative' }}>
+              <input 
+                type={showConfirmPassword ? 'text' : 'password'} 
+                name="confirmPassword"
+                className="form-control" 
+                value={formData.confirmPassword}
+                onChange={handleChange}
+                required 
+                placeholder="Confirm your password"
+                style={{ paddingRight: '45px' }}
+              />
+              <button
+                type="button"
+                onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                style={{
+                  position: 'absolute',
+                  right: '12px',
+                  top: '50%',
+                  transform: 'translateY(-50%)',
+                  background: 'none',
+                  border: 'none',
+                  color: 'var(--text-muted)',
+                  cursor: 'pointer',
+                  display: 'flex',
+                  alignItems: 'center',
+                  padding: '4px'
+                }}
+              >
+                {showConfirmPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+              </button>
+            </div>
           </div>
           
           <button type="submit" className="btn btn-primary btn-block" disabled={isLoading}>
